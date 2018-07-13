@@ -1,0 +1,114 @@
+1 Install PHP 7.2
+************************************************************************************
+New Post
+Since this post is now a few months old - PHP 7.2 is now out. Click the link below to read my new version about upgrading to PHP7.2
+
+https://jakelprice.com/article/php-70-to-php-72-how-to-upgrade-your-server
+
+Original Post
+I use DigitalOcean as the host for my servers due to the ease of getting a servers up and running and the great prices they offer. For even more ease of use, they also offer One-Click Apps which I use to get a LAMP server on Ubuntu 16.04 without worrying about installation and configuration of all the software needed. The only issue I have at the moment (not due to DigitalOcean!) is that Ubuntu 16.04 only has access to PHP 7.0 in default apt-get repos.
+
+PHP 7.1 is out now though, and Laravel 5.5 needs it to be installed (thanks to a Doctrine package), so lets install it! For this how-to, I am using a clean droplet freshly created.
+
+Add Ondrejs PPA Repo
+PPA's or Personal Package Archive, is a collection of software not included in Ubuntu by default. Typically these repositories focus on a single program, but they can include more depending on the person maintaining them. Ondřej Surý has created this PPA which has the latest versions of PHP in it. Lets add it to your system, and update to get a list of all the software we can install.
+
+$ sudo add-apt-repository ppa:ondrej/php
+$ sudo apt-get update
+Install PHP 7.1
+Lets stop our server first, then install PHP 7.1.
+
+$ service apache2 stop
+$ sudo apt-get install php7.1 php7.1-common
+We'll also install some extra packages for our PHP installation - these are needed for Laravel and Composer!
+
+$ sudo apt-get install php7.1-curl php7.1-xml php7.1-zip php7.1-gd php7.1-mysql php7.1-mbstring
+Once that is done, lets check PHP is updated on the CLI
+
+$ php -v
+If the first row looks like this, we've done good so far! PHP 7.1.11-1+ubuntu16.04.1+deb.sury.org+1 (cli) (built: Oct 27 2017 13:49:56) ( NTS )
+
+Remove PHP 7.0
+Now we have PHP7.1, lets get rid of PHP7.0
+
+$ sudo apt-get purge php7.0 php7.0-common
+Once this has been done, I usually restart the server.
+
+$ sudo shutdown -r now
+Make PHP7.1 used by Apache
+Finally, we need to tell Apache to use PHP7.1 now PHP 7.0 is not being used. Lets enable the PHP mod!
+
+$ a2enmod php7.1
+$ service apache2 restart
+Thats it - PHP should now be using PHP 7.1 - enjoy your amazing new features such as function return types and multiple error catch's! 
+If you are having issues, feel free to prod me on Twitter at @
+*********************************************************************************************************************************************
+2. INSTALL COMPOSER .exe
+*********************************************************************************************************************************************
+3. install VirtualBox .exe
+*********************************************************************************************************************************************
+4. Install Vagrant .exe
+*********************************************************************************************************************************************
+5. Install GitBash Link:https://git-scm.com/download/win     .exe
+*********************************************************************************************************************************************
+6. Now open git bash in administrator mode and run the following command:
+vagrant box add laravel/homestead
+*********************************************************************************************************************************************
+7. Now, after completing Step 4, type "cd ~" on you git bash and hit enter. Now run the following command:
+git clone https://github.com/laravel/homestead.git 
+*********************************************************************************************************************************************
+8. cd Homestead
+   bash init.sh
+*********************************************************************************************************************************************
+9. Now we need ssh key. To check it is already exist in your computer or not go to C:\Users\USER_NAME\ directory and try to find out 
+a folder named .ssh. If it exists, go into the folder and try to find out two files named id_rsa and id_rsa.pub. If the folder .ssh doesn’t 
+exist or the folder exists but the two files named id_rsa and id_rsa.pub doesn’t exist then run the following command:
+
+ssh-keygen -t rsa -C “your_email@example.com
+*********************************************************************************************************************************************
+10. nano Homestead.yaml 
+********************************************************************************************************************************************
+11. Edit Homestead.yaml
+
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/laravel_projects # directoru for project on local machine
+      to: /home/vagrant/code  # direktory on local machine
+
+sites:
+    - map: blogsite.test #site url on local machine
+      to: /home/vagrant/code/blogsite/public # location for url on virtual machine
+
+databases:
+    - homestead # database 1
+
+    - blogsite  # database 2
+
+**********************************************************************************************************
+12. Edit Host.txt file on your machine
+192.168.10.10 blogsite.test
+**********************************************************************************************************
+13. vagrant up
+**********************************************************************************************************
+14. if you have some changes in Homestead.yaml file
+vagrant reload --provision
+**********************************************************************************************************
+15. vagrant ssh
+**********************************************************************************************************
+16. cd cide
+    laravel new App
+    cd App
+    nano .env # set BATABASE name
+    php artisan migrate
+    php artusan serve
+********************************************************************************************************** 

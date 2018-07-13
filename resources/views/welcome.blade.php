@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Nenad Milenkovic
+                    Blog
                 </div>
 
                 <div class="links">
